@@ -1,0 +1,2 @@
+# -LinkedListADT
+linkedList assignement

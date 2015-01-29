@@ -220,7 +220,7 @@ void test_get_last_will_return_45(){
 	free(nodeToInsert);
 };
 
-void replaceNameWithKhello(void * data){
+void addFiveToGivenIntData(void * data){
 	*(int*)data = *(int*)data + 5 ;
 };
 
@@ -229,6 +229,7 @@ void test_Write_a_generic_traverse_function_that_can_go_through_a_list_and_proce
 	int number1 = 20;
 	int number2 = 30;
 	int count;
+	void* result;
 	node_ptr expected2,expected1,expected;
 
 	LinkedList list = createList();
@@ -241,7 +242,9 @@ void test_Write_a_generic_traverse_function_that_can_go_through_a_list_and_proce
 
 	expected2 = create_node((void*)number2);
 	count = add_to_list(&list,expected2);
-	traverse(list, replaceNameWithKhello);
+	traverse(list, addFiveToGivenIntData);
+	result = get_first_element(list);
+	assertEqual(*(int*)result, 15);
 };
 
 void increament(void* data){
@@ -268,4 +271,74 @@ void test_traverse_gives_all_elements_by_increament_followed_by_one_get_last_46(
 	result = get_last_element(list);
 
 	assertEqual(*(int*)result, 46);
+};
+
+void changeStringToUpperCase(void * data){
+	int i=0;
+	char* string = malloc(sizeof(char*));
+	strcpy(string,*(char**)data);
+	while(string[i]!='\0'){
+		string[i] = string[i] - 32;
+		i++;
+	}
+	*(char**)data = string;
+};
+
+void test_traverse_to_list_add_the_element_into_list_and_give_string(){
+	char* name = "hello";
+	char *name1 = "gello";
+	char *name2 = "ghello";
+	int count;
+	void* result;
+	node_ptr expected2,expected1,expected;
+
+	LinkedList list = createList();
+
+	expected = create_node((void*)name);
+	count = add_to_list(&list,expected);
+	
+	expected1 = create_node((void*)name1);
+	count = add_to_list(&list,expected1);
+
+	expected2 = create_node((void*)name2);
+	count = add_to_list(&list,expected2);
+
+	traverse(list, changeStringToUpperCase);
+	result = get_last_element(list);
+	assertEqual(strcmp("GHELLO",*(char**)result),0);
+};
+
+void test_traverse_to_list_add_the_element_into_list_and_give_capital_letter_string(){
+	char* name = "hello";
+	char *name1 = "gello";
+	char *name2 = "ghello";
+	int count;
+	void* result;
+	node_ptr expected2,expected1,expected;
+
+	LinkedList list = createList();
+
+	expected = create_node((void*)name);
+	count = add_to_list(&list,expected);
+	
+	expected1 = create_node((void*)name1);
+	count = add_to_list(&list,expected1);
+
+	expected2 = create_node((void*)name2);
+	count = add_to_list(&list,expected2);
+
+	traverse(list, changeStringToUpperCase);
+	result = get_first_element(list);
+	assertEqual(strcmp("HELLO",*(char**)result),0);
+};
+
+void test_Given_an_index_as_an_integer_return_the_data_reference_contained_at_that_position_in_the_list(){
+	void *result;
+	int index = 1;
+	LinkedList list = createList();
+	list = initialize(list);
+
+	result = getElementAt(list,index);
+
+	assertEqual((int)result, 45);
 };

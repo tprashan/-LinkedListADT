@@ -225,25 +225,20 @@ void addFiveToGivenIntData(void * data){
 };
 
 void test_Write_a_generic_traverse_function_that_can_go_through_a_list_and_process_each_element(){
-	int number = 10;
-	int number1 = 20;
-	int number2 = 30;
-	int count;
+	int number = 10, number1 = 20, number2 = 30;
 	void* result;
-	node_ptr expected2,expected1,expected;
 
 	LinkedList list = createList();
 
-	expected = create_node((void*)number);
-	count = add_to_list(&list,expected);
+	add_to_list(&list,create_node((void*)number));
 	
-	expected1 = create_node((void*)number1);
-	count = add_to_list(&list,expected1);
+	add_to_list(&list,create_node((void*)number1));
 
-	expected2 = create_node((void*)number2);
-	count = add_to_list(&list,expected2);
+	add_to_list(&list,create_node((void*)number2));
+
 	traverse(list, addFiveToGivenIntData);
 	result = get_first_element(list);
+
 	assertEqual(*(int*)result, 15);
 };
 
@@ -285,50 +280,38 @@ void changeStringToUpperCase(void * data){
 };
 
 void test_traverse_to_list_add_the_element_into_list_and_give_string(){
-	char* name = "hello";
-	char *name1 = "gello";
-	char *name2 = "ghello";
-	int count;
+	char* name = "hello", *name1 = "gello", *name2 = "ghello";
 	void* result;
-	node_ptr expected2,expected1,expected;
 
 	LinkedList list = createList();
 
-	expected = create_node((void*)name);
-	count = add_to_list(&list,expected);
+	add_to_list(&list,create_node((void*)name));
 	
-	expected1 = create_node((void*)name1);
-	count = add_to_list(&list,expected1);
+	add_to_list(&list,create_node((void*)name1));
 
-	expected2 = create_node((void*)name2);
-	count = add_to_list(&list,expected2);
+	add_to_list(&list,create_node((void*)name2));
 
 	traverse(list, changeStringToUpperCase);
 	result = get_last_element(list);
+
 	assertEqual(strcmp("GHELLO",*(char**)result),0);
 };
 
 void test_traverse_to_list_add_the_element_into_list_and_give_capital_letter_string(){
-	char* name = "hello";
-	char *name1 = "gello";
-	char *name2 = "ghello";
-	int count;
+	char* name = "hello", *name1 = "gello", *name2 = "ghello";
 	void* result;
-	node_ptr expected2,expected1,expected;
 
 	LinkedList list = createList();
 
-	expected = create_node((void*)name);
-	count = add_to_list(&list,expected);
+	add_to_list(&list,create_node((void*)name));
 	
-	expected1 = create_node((void*)name1);
-	count = add_to_list(&list,expected1);
+	add_to_list(&list,create_node((void*)name1));
 
-	expected2 = create_node((void*)name2);
-	count = add_to_list(&list,expected2);
+	add_to_list(&list,create_node((void*)name2));
 
 	traverse(list, changeStringToUpperCase);
 	result = get_first_element(list);
+
 	assertEqual(strcmp("HELLO",*(char**)result),0);
 };
 
@@ -341,4 +324,348 @@ void test_Given_an_index_as_an_integer_return_the_data_reference_contained_at_th
 	result = getElementAt(list,index);
 
 	assertEqual((int)result, 45);
+};
+
+void test_Given_an_element_find_the_first_index_at_which_this_element_occurs_in_a_list(){
+	int result;
+	int element = 45;
+	LinkedList list = createList();
+	list = initialize(list);
+
+	result = indexOf(list,(void*)element);
+	assertEqual((int)result,1);
+};
+
+void test_Given_an_element_find_the_first_index_at_which_this_23_element_occurs_in_a_list(){
+	int result;
+	int element = 23;
+	LinkedList list = createList();
+	list = initialize(list);
+
+	result = indexOf(list,(void*)element);
+	assertEqual((int)result,0);
+};
+
+void test_Given_an_element_find_the_first_index_at_which_this_19_element_occurs_in_a_list_this_should_return_minus_1(){
+	int result;
+	int element = 19;
+	LinkedList list = createList();
+	list = initialize(list);
+
+	result = indexOf(list,(void*)element);
+	assertEqual((int)result,-1);
+};
+
+void test_Given_an_index_delete_the_element_at_that_list_Return_the_data_referenced_by_the_node_at_that_position(){
+	int number = 10, number1 = 20, number2 = 30,index=1;
+	void* result;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)number));
+	
+	add_to_list(&list,create_node((void*)number1));
+
+	add_to_list(&list,create_node((void*)number2));
+
+	result = deleteElementAt(&list,index);
+	
+	assertEqual((int)result, 20);
+};
+
+void test_Given_an_index_delete_the_element_at_that_list_Return_the_data_referenced_by_the_node_at_position_0(){
+	int number = 10, number1 = 20, number2 = 30,index=0;
+	void* result;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)number));
+	
+	add_to_list(&list,create_node((void*)number1));
+
+	add_to_list(&list,create_node((void*)number2));
+
+	result = deleteElementAt(&list,index);
+	
+	assertEqual((int)result, 10);
+};
+
+void test_Given_an_index_delete_the_element_at_that_list_Return_the_data_referenced_by_the_node_at_position_2(){
+	int number = 10, number1 = 20, number2 = 30, index=2;
+	void* result;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)number));
+	
+	add_to_list(&list,create_node((void*)number1));
+
+	add_to_list(&list,create_node((void*)number2));
+
+	result = deleteElementAt(&list,index);
+	
+	assertEqual((int)result, 30);
+};
+
+void test_after_delete_first_element_that_element_should_not_present_in_the_list(){
+	int number = 10, number1 = 20, number2 = 30;
+	int index=0;
+	void* result, *element;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)number));
+	
+	add_to_list(&list,create_node((void*)number1));
+
+	add_to_list(&list,create_node((void*)number2));
+
+	result = deleteElementAt(&list,index);
+	element = get_first_element(list);
+
+	assertEqual((int)result, 10);
+	assertEqual(*(int*)element, 20);
+};
+
+void test_after_delete_last_element_that_element_should_not_present_in_the_list(){
+	int number = 10, number1 = 20, number2 = 30;
+	int index=2;
+	void* result,* element;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)number));
+	
+	add_to_list(&list,create_node((void*)number1));
+
+	add_to_list(&list,create_node((void*)number2));
+
+	result = deleteElementAt(&list,index);
+	element = get_last_element(list);
+
+	assertEqual((int)result, 30);
+	assertEqual(*(int*)element, 20);
+};
+
+void test_delete_string_from_a_list_by_given_index(){
+	char* name = "hello", *name1 = "gello", *name2 = "ghello";
+	int index=2;
+	void* result,* element;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)name));
+	
+	add_to_list(&list,create_node((void*)name1));
+
+	add_to_list(&list,create_node((void*)name2));
+
+	result = deleteElementAt(&list,index);
+	element = get_last_element(list);
+
+	assertEqual(strcmp((char*)result,"ghello"),0);
+	assertEqual(strcmp(*(char**)element,"gello"),0);
+};
+
+void test_delete_string_from_a_list_by_given_index_0(){
+	char* name = "hello", *name1 = "gello", *name2 = "ghello";
+	int index=0;
+	void* result,* element;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)name));
+	
+	add_to_list(&list,create_node((void*)name1));
+
+	add_to_list(&list,create_node((void*)name2));
+
+	result = deleteElementAt(&list,index);
+	element = get_last_element(list);
+
+	assertEqual(strcmp((char*)result,"hello"),0);
+	assertEqual(strcmp(*(char**)element,"ghello"),0);
+};
+
+void test_delete_string_from_a_list_by_given_index_0_and_gello_will_be_first_term(){
+	char* name = "hello",*name1 = "gello",*name2 = "ghello";
+	int index=0;
+	void* result,* element;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)name));
+	
+	add_to_list(&list,create_node((void*)name1));
+
+	add_to_list(&list,create_node((void*)name2));
+
+	result = deleteElementAt(&list,index);
+	element = get_first_element(list);
+
+	assertEqual(strcmp((char*)result,"hello"),0);
+	assertEqual(strcmp(*(char**)element,"gello"),0);
+};
+
+void test_delete_string_from_a_list_by_given_index_1_and_gello_will_be_nomore_there(){
+	char* name = "hello",*name1 = "gello",*name2 = "ghello";
+	int index=1,element;
+	void* result;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)name));
+	
+	add_to_list(&list,create_node((void*)name1));
+
+	add_to_list(&list,create_node((void*)name2));
+
+	result = deleteElementAt(&list,index);
+	element = indexOf(list,(void*)name1);
+
+	assertEqual(strcmp((char*)result,"gello"),0);
+	assertEqual(element,-1);
+};
+
+void test_delete_string_from_a_list_by_given_index_1_replace_the_value_with_next_value(){
+	char* name = "hello",*name1 = "gello",*name2 = "ghello";
+	int index=1,element;
+	void* result;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)name));
+	
+	add_to_list(&list,create_node((void*)name1));
+
+	add_to_list(&list,create_node((void*)name2));
+
+	result = deleteElementAt(&list,index);
+	element = indexOf(list,(void*)name);
+
+	assertEqual(strcmp((char*)result,"gello"),0);
+	assertEqual((int)element,0);
+};
+
+void test_this_function_will_populate_the_array_with_all_the_elements_of_a_list (){
+	int number = 10,number1 = 20,number2 = 30,result;
+	void *array[3];
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)number));
+	
+	add_to_list(&list,create_node((void*)number1));
+
+	add_to_list(&list,create_node((void*)number2));
+
+	result = asArray(list,array);
+	assertEqual(result,3);
+
+};
+
+int isEven(void *data){
+	return ((int)data%2==0)?1:0;
+}
+
+void test_filter_gives_list_of_evens(){
+	int number = 10,number1 = 30,number2 = 21;
+	LinkedList* result;
+
+	LinkedList list = createList();
+
+	add_to_list(&list,create_node((void*)number));
+	
+	add_to_list(&list,create_node((void*)number1));
+
+	add_to_list(&list,create_node((void*)number2));
+
+	result=filter(list,isEven);
+	assertEqual((int)result->tail->data,30);
+};
+/////////////////
+
+int isOdd(void* element){
+	return ((int)element%2==0)?0:1;
+};
+
+void test_filter_returns_list_of_data_23_and_45(){
+	LinkedList list = createList();
+	LinkedList *result;
+	list = initialize(list);
+	result = filter(list,isOdd);
+
+	assertEqual((int)result->count,2);
+	free(result);
+};
+
+void test_filter_returns_list_of_data_23_and_45_and_head_will_be_23(){
+	LinkedList list = createList();
+	LinkedList *result;
+	list = initialize(list);
+	result = filter(list,isOdd);
+
+	assertEqual((int)result->count,2);
+	assertEqual((int)result->head->data,23);
+	free(result);
+};
+
+void test_filter_returns_list_of_data_23_and_45_and_last_will_be_45(){
+	LinkedList list = createList();
+	LinkedList *result;
+	list = initialize(list);
+	result = filter(list,isOdd);
+
+	assertEqual((int)result->count,2);
+	assertEqual(*(int*)get_last_element(*result),45);
+	free(result);
+};
+int lessThan(void* element){
+	return (strlen((char*)element)>5)?1:0;
+};
+
+void test_filter_will_return_lenth_1_and_gellooo_atFirst(){
+	char* name = "hello";
+	char *name1 = "gellooo",*element;
+	int length;
+	LinkedList *result;
+	node_ptr expected1,expected;
+	LinkedList list = createList();
+
+	expected = create_node((void*)name);
+	add_to_list(&list,expected);
+	
+	expected1 = create_node((void*)name1);
+	add_to_list(&list,expected1);
+	result = filter(list,lessThan);
+	strcpy(element,get_first_element(*result));
+
+	assertEqual((int)result->count,1);
+	assertEqual(strcmp(*(char**)element,"gellooo"),0);
+	free(expected);
+	free(expected1);
+	free(result);
+};
+
+void test_filter_will_return_lenth_1_and_gellooo_atLast(){
+	char* name = "hello";
+	char *name1 = "gellooo",*element;
+	int length;
+	LinkedList *result;
+	node_ptr expected1,expected;
+	LinkedList list = createList();
+
+	expected = create_node((void*)name);
+	add_to_list(&list,expected);
+	
+	expected1 = create_node((void*)name1);
+	add_to_list(&list,expected1);
+	result = filter(list,lessThan);
+	strcpy(element,get_last_element(*result));
+
+	assertEqual((int)result->count,1);
+	assertEqual(strcmp(*(char**)element,"gellooo"),0);
+	free(expected);
+	free(expected1);
+	free(result);
 };

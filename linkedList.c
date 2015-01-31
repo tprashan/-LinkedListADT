@@ -55,3 +55,68 @@ void * getElementAt(LinkedList list, int index){
 	}
 	return NULL;
 };
+
+int indexOf(LinkedList list, void * element){
+	int i= 0;
+	while(i<list.count){
+		if(list.head->data == element)
+			return i;
+		i++;
+		list.head = list.head->next;
+	}
+	return -1;
+};
+
+void * deleteElementAt(LinkedList * list, int index){
+	int i= 0;
+	node_ptr listHead =list->head;
+	node_ptr prevAddress=NULL;
+
+	if(list->count<index || index<0)
+		return NULL;
+
+	if(index==0){
+		prevAddress = list->head;
+		list->head = list->head->next;
+		return prevAddress->data;
+	}
+
+	while(i<list->count){
+		prevAddress = listHead;
+		listHead = listHead->next;
+		if(i==index-1){
+			if(listHead->next==NULL)
+				list->tail=prevAddress;
+			else
+				prevAddress->next = listHead->next;
+			list->count--;
+			return listHead->data;
+		}
+		i++;
+	}
+	return 0;
+};
+
+int asArray(LinkedList list, void ** array){
+	int i=0;
+	for(i=0;i<list.count;i++){
+		array[i] = list.head;
+		list.head = list.head->next;
+	}
+	return i;
+};
+
+LinkedList * filter(LinkedList list, filterFunction* isEven){
+	int data;
+	LinkedList* filterList = malloc(sizeof(LinkedList));
+	*filterList = createList();
+
+	while(list.head!=NULL){
+		data = isEven(list.head->data);
+		if(data==1){
+			add_to_list(filterList,list.head);
+		}
+		list.head = list.head->next;
+	}
+	return filterList;
+};
